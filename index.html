@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente Virtual en JAVA</title>
+</head>
+<body>
+    <h1>Asistente Virtual en Programación en JAVA</h1>
+    <div>
+        <textarea id="userInput" rows="4" cols="50" placeholder="Escribe tu pregunta aquí..."></textarea><br>
+        <button onclick="enviarPregunta()">Enviar</button>
+    </div>
+    <h3>Respuesta del Asistente:</h3>
+    <p id="respuesta"></p>
+
+    <script>
+        async function enviarPregunta() {
+            const userInput = document.getElementById('userInput').value;
+            const response = await fetch('http://localhost:5000/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: userInput }),
+            });
+            const data = await response.json();
+            document.getElementById('respuesta').innerText = data.response;
+        }
+    </script>
+</body>
+</html>
